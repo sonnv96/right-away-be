@@ -45,14 +45,9 @@ export default class AuthController {
 
             user.refreshToken = refreshToken
             await user.save();
-            // user = JSON.parse(JSON.stringify(user))
-            let userSetting = await this.userService.getUserSettingByUser(user.userId)
+            
             Object.assign(userResp, { access_token: token })
-            Object.assign(userResp, { settings: JSON.parse(JSON.stringify(userSetting)) })
             Object.assign(userResp, { data: JSON.parse(JSON.stringify(user)) })
-            Object.assign(userResp, { role: 'admin' })
-            Object.assign(userResp, { shortcuts: ["contacts"] })
-
 
             res.status(200).send({
                 success: true,
@@ -82,12 +77,8 @@ export default class AuthController {
                     }
                 });
             }
-            let userSetting = await this.userService.getUserSettingByUser(user.userId)
             Object.assign(userResp, { access_token: access_token })
-            Object.assign(userResp, { settings: JSON.parse(JSON.stringify(userSetting)) })
             Object.assign(userResp, { data: JSON.parse(JSON.stringify(user)) })
-            Object.assign(userResp, { role: 'admin' })
-            Object.assign(userResp, { shortcuts: ["contacts"] })
 
 
             res.status(200).send({
@@ -156,11 +147,6 @@ export default class AuthController {
             });
 
             const newUser = await user.save();
-
-            if (newUser.userId) {
-
-                await this.userService.createUserSettingDefault(newUser.userId)
-            }
 
             res.status(200).send({
                 success: false,

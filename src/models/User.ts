@@ -93,6 +93,9 @@ const userSchema: Schema = new Schema({
         required: true,
         default: "N"
     },
+}, {
+    timestamps: true,
+    collection: 'users'
 });
 
 userSchema.pre<IUser>("save", async function save(next) {
@@ -101,12 +104,13 @@ userSchema.pre<IUser>("save", async function save(next) {
         const cryptoHash: CryptoHash = new CryptoHash()
         const hash = await cryptoHash.hash(this.password);
         user.password = hash.toString();
-	}
+    }
     next()
 });
 
-userSchema.methods.comparePassword = async (candidatePassword: string, currentPassword: string) =>  {
+userSchema.methods.comparePassword = async (candidatePassword: string, currentPassword: string) => {
     const cryptoHash: CryptoHash = new CryptoHash()
     return await cryptoHash.verify(candidatePassword, currentPassword)
 };
-export default model<IUser>('Users', userSchema);
+// UserModel is name export, if set name collection, will get this name for collection
+export default model<IUser>('UserModel', userSchema);

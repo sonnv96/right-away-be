@@ -5,7 +5,7 @@ const baseHost = 'localhost:' + systemConstant.portLocal.toString()
 // const baseHost = 's2nm-backend.herokuapp.com/'
 const options = {
   // List of files to be processed.
-  apis: ['**/*.ts'],
+  apis: ['**/*.ts','src/docs/*.yml'],
   host: baseHost,
   swaggerDefinition: {
     info: {

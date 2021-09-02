@@ -1,4 +1,3 @@
-import httpStatus from "http-status";
 import { Category } from "../models";
 
 // /**
@@ -23,7 +22,7 @@ import { Category } from "../models";
  * @returns {Promise<QueryResult>}
  */
 const queryCategories = async (filter, options) => {
-  const users = await Category.paginate(1,2);
+  const users = await Category.paginate(filter, options);
   return users;
 };
 
@@ -78,11 +77,4 @@ const queryCategories = async (filter, options) => {
 //   return user;
 // };
 
-// module.exports = {
-//   createUser,
-//   queryUsers,
-//   getUserById,
-//   getUserByEmail,
-//   updateUserById,
-//   deleteUserById,
-// };
+export const categoryService = {queryCategories}

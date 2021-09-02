@@ -1,4 +1,4 @@
-import { Document, model, Schema } from "mongoose";
+import { Document, Model, model, Schema } from "mongoose";
 import { paginate, toJSON } from "../middlewares";
 
 /**
@@ -10,8 +10,11 @@ export interface ICategory extends Document {
     categoryCode: string;
     categoryName: string;
     deleted: string;
-    paginate(limit: any, page: any): any
 }
+
+export interface IPostModel extends Model<ICategory> {
+    paginate(a: any, b: any): Promise<ICategory[]>
+  }
 
 const categorySchema: Schema = new Schema({
     categoryCode: {
@@ -35,8 +38,10 @@ const categorySchema: Schema = new Schema({
     collection: 'categories'
 });
 
+
+
 // add plugin that converts mongoose to json
 categorySchema.plugin(toJSON);
 categorySchema.plugin(paginate);
 
-export const Category =  model<ICategory>('CategoryModel', categorySchema);
+export const Category =  model<ICategory>('CategoryModel', categorySchema) as IPostModel;

@@ -12,9 +12,9 @@ export interface ICategory extends Document {
     deleted: string;
 }
 
-export interface IPostModel extends Model<ICategory> {
-    paginate(a: any, b: any): Promise<ICategory[]>
-  }
+export interface IPluginModel extends Model<ICategory> {
+    paginate(filter: any, options: any): Promise<ICategory[]>
+}
 
 const categorySchema: Schema = new Schema({
     categoryCode: {
@@ -41,7 +41,7 @@ const categorySchema: Schema = new Schema({
 
 
 // add plugin that converts mongoose to json
-categorySchema.plugin(toJSON);
+// categorySchema.plugin(toJSON);
 categorySchema.plugin(paginate);
 
-export const Category =  model<ICategory>('CategoryModel', categorySchema) as IPostModel;
+export const Category =  model<ICategory>('CategoryModel', categorySchema) as IPluginModel;

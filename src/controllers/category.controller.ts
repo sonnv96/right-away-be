@@ -6,9 +6,8 @@ import { catchAsync, pick } from "../utils";
 
 const getCategories = catchAsync(async (req: Request, res: Response): Promise<void> => {
     const filter = pick(req.query, ['name', 'role']);
-    // const options = pick(req.query, ['sortBy', '2', '1']);
-    const options = {limit: 1, page: 1};
-    // const list = await Category.find();
+    const options = pick(req.query, ['sortBy', 'page', 'limit']);
+    filter.deleted = 'N'
     const list = await categoryService.queryCategories(filter, options);
     res.json({ list });
 })

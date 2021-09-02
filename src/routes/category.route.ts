@@ -30,6 +30,19 @@ export default router
 *      produces:
 *      - "application/json"
 *      - "application/xml"
+*      parameters:
+*      - name: "page"
+*        in: "query"
+*        description: "page number of list"
+*        required: false
+*        type: "number"
+*        default: 1
+*      - name: "limit"
+*        in: "query"
+*        description: "page size of list"
+*        required: false
+*        type: "number"
+*        default: 10
 *      responses:
 *        '200':
 *          description: "successful operation"

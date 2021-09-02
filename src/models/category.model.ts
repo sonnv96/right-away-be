@@ -48,4 +48,4 @@ const categorySchema: Schema = new Schema({
     collection: 'categories'
 });
 
-export default model<ICategory>('CategoryModel', categorySchema);
+export const Category =  model<ICategory>('CategoryModel', categorySchema);

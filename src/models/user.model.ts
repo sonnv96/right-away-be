@@ -114,4 +114,4 @@ userSchema.methods.comparePassword = async (candidatePassword: string, currentPa
     return await cryptoHash.verify(candidatePassword, currentPassword)
 };
 // UserModel is name export, if set name collection, will get this name for collection
-export default model<IUser>('UserModel', userSchema);
+export const UserModel = model<IUser>('UserModel', userSchema);

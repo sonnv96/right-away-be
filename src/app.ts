@@ -5,39 +5,67 @@ import cors from "cors";
 import routes from "./routes/index";
 import ConnectDB from './config/connection';
 import systemConstant from "./config/system-constant";
+const mongoose = require('mongoose');
 
-class Server {
-  public app: express.Application;
-  private connectDB: ConnectDB = new ConnectDB();
+const app = express();
 
-  constructor() {
-    this.app = express();
-    this.config();
-    this.routes();
-  }
+// parse json request body
+app.use(express.json());
 
-  public routes(): void {
-    this.app.use("/", routes);
-  }
+// parse urlencoded request body
+app.use(express.urlencoded({ extended: true }));
 
-  public config(): void {
-    this.app.set("port", process.env.PORT || systemConstant.portLocal);
-    this.app.use(bodyParser.json());
-    this.app.use(bodyParser.urlencoded({ extended: false }));
-    this.app.use(cors());
-    this.connectDB.mongoSetup()
-  }
+// enable cors
+app.use(cors());
+app.options('*', cors());
 
-  public start(): void {
-    this.app.listen(this.app.get("port"), () => {
-      console.log("Server running at http://localhost:%d", this.app.get("port"));
-    });
-  }
-}
+// v1 api routes
+app.use('/', routes);
 
-const server = new Server();
+// connect db
+mongoose.connect(systemConstant.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false }).then(() => {
+  // logger.info('Connected to MongoDB');
+  app.listen(process.env.PORT || systemConstant.portLocal, () => {
+    console.log(`Listening to port ${process.env.PORT || systemConstant.portLocal}`);
+  });
+});
 
-// Connects to the Database -> then starts the express
-// createConnection().then(async () => {
-  server.start();
-// });
+
+
+
+
+// class Server {
+//   public app: express.Application;
+//   private connectDB: ConnectDB = new ConnectDB();
+
+//   constructor() {
+//     this.app = express();
+//     this.config();
+//     this.routes();
+//   }
+
+//   public routes(): void {
+//     this.app.use("/", routes);
+//   }
+
+//   public config(): void {
+//     this.app.set("port", process.env.PORT || systemConstant.portLocal);
+//     this.app.use(bodyParser.json());
+//     this.app.use(bodyParser.urlencoded({ extended: false }));
+//     this.app.use(cors());
+//     this.connectDB.mongoSetup()
+//   }
+
+//   public start(): void {
+//     this.app.listen(this.app.get("port"), () => {
+//       console.log("Server running at http://localhost:%d", this.app.get("port"));
+//     });
+//   }
+// }
+
+// const server = new Server();
+
+// // Connects to the Database -> then starts the express
+// // createConnection().then(async () => {
+// server.start();
+// // });

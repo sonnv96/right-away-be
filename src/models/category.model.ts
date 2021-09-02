@@ -1,19 +1,5 @@
 import { Document, model, Schema } from "mongoose";
-
-
-/**
-* @swagger
-* definitions:
-*  CategoryModel:
-*    type: object
-*    properties:
-*      categoryCode:
-*        type: string
-*      categoryName:
-*        type: string
-*    xml:
-*      name: UserModel
-*/
+import { paginate, toJSON } from "../middlewares";
 
 /**
  * Interface to model the User Schema for TypeScript.
@@ -24,6 +10,7 @@ export interface ICategory extends Document {
     categoryCode: string;
     categoryName: string;
     deleted: string;
+    paginate(limit: any, page: any): any
 }
 
 const categorySchema: Schema = new Schema({
@@ -47,5 +34,9 @@ const categorySchema: Schema = new Schema({
     timestamps: true,
     collection: 'categories'
 });
+
+// add plugin that converts mongoose to json
+categorySchema.plugin(toJSON);
+categorySchema.plugin(paginate);
 
 export const Category =  model<ICategory>('CategoryModel', categorySchema);

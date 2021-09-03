@@ -1,16 +1,35 @@
 import { Category } from "../models";
 
-// /**
-//  * Create a user
-//  * @param {Object} userBody
-//  * @returns {Promise<User>}
-//  */
-// const createUser = async (userBody) => {
-//   if (await UserModel.isEmailTaken(userBody.email)) {
-//     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
-//   }
-//   return User.create(userBody);
-// };
+
+interface ResultNewData {
+  statusCode: number;
+  message: string;
+  dataResponse: any;
+}
+/**
+ * Create a category
+ * @param {Object} categoryBody
+ * @returns {Promise<User>}
+ */
+
+const createCategory = async (categoryBody) => {
+  let result: ResultNewData = { statusCode: 200, message: "Success", dataResponse: categoryBody }
+  const newCategory: any = new Category(categoryBody);
+  const category = await Category.findOne({ categoryCode: categoryBody.categoryCode });
+  if (category === null) {
+    const categorySave = await newCategory.save();
+    if (categorySave === null) {
+      result.statusCode = 500
+    } else {
+      result.statusCode = 200
+      result.dataResponse = categorySave
+    }
+  } else {
+    result.statusCode = 200
+    result.message = "Category exited"
+  }
+  return result;
+};
 
 /**
  * Query for category
@@ -26,42 +45,26 @@ const queryCategories = async (filter, options) => {
   return users;
 };
 
-// /**
-//  * Get user by id
-//  * @param {ObjectId} id
-//  * @returns {Promise<User>}
-//  */
-// const getUserById = async (id) => {
-//   return Category.findById(id);
-// };
+/**
+ * Get category by id
+ * @param {ObjectId} id
+ * @returns {Promise<Category>}
+ */
+const getCategoryById = async (id) => {
 
-// /**
-//  * Get user by email
-//  * @param {string} email
-//  * @returns {Promise<User>}
-//  */
-// const getUserByEmail = async (email) => {
-//   return Category.findOne({ email });
-// };
+  return Category.findById(id);
+};
 
-// /**
-//  * Update user by id
-//  * @param {ObjectId} userId
-//  * @param {Object} updateBody
-//  * @returns {Promise<User>}
-//  */
-// const updateUserById = async (userId, updateBody) => {
-//   const user = await getUserById(userId);
-//   if (!user) {
-//     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
-//   }
-//   if (updateBody.email && (await User.isEmailTaken(updateBody.email, userId))) {
-//     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
-//   }
-//   Object.assign(user, updateBody);
-//   await user.save();
-//   return user;
-// };
+
+/**
+ * Update category by id
+ * @param {ObjectId} categoryId
+ * @param {Object} updateBody
+ * @returns {Promise<User>}
+ */
+const updateCategoryById = async (id, updateBody) => {
+  return Category.findOneAndUpdate({ _id: id }, updateBody);
+};
 
 // /**
 //  * Delete user by id
@@ -77,4 +80,4 @@ const queryCategories = async (filter, options) => {
 //   return user;
 // };
 
-export const categoryService = {queryCategories}
+export const categoryService = { queryCategories, getCategoryById, updateCategoryById, createCategory }

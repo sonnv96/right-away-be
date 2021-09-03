@@ -1,6 +1,6 @@
 {
   "canvas": {
-    "version": "2.2.2",
+    "version": "2.2.3",
     "width": 2000,
     "height": 2000,
     "scrollTop": -174.6666666666667,
@@ -19,7 +19,7 @@
     },
     "database": "MySQL",
     "databaseName": "rightawaydb",
-    "canvasType": "GeneratorCode",
+    "canvasType": "@vuerd/builtin-sql-ddl",
     "language": "GraphQL",
     "tableCase": "pascalCase",
     "columnCase": "camelCase",
@@ -36,7 +36,8 @@
         "columnDefault",
         "columnComment"
       ]
-    }
+    },
+    "pluginSerializationMap": {}
   },
   "table": {
     "tables": [

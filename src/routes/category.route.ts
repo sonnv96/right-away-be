@@ -67,7 +67,7 @@ export default router
 *      parameters:
 *      - name: "categoryId"
 *        in: "path"
-*        description: "_id of userto return"
+*        description: "_id of category to return"
 *        required: true
 *        type: "string"
 *      responses:
@@ -94,7 +94,7 @@ export default router
 *      - "application/xml"
 *      - "application/json"
 *      parameters:
-*      - name: "id"
+*      - name: "categoryId"
 *        in: "path"
 *        description: "_id of object need update"
 *        required: true

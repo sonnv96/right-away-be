@@ -1,18 +1,14 @@
+import { IResponseData } from "../interfaces";
 import { Category } from "../models";
 
 
-interface ResponseData {
-  statusCode: number;
-  message: string;
-  data: any;
-}
 /**
  * Create a category
  * @param {Object} categoryBody
- * @returns {Promise<ResponseData>}
+ * @returns {Promise<IResponseData>}
  */
 const createCategory = async (categoryBody) => {
-  let result: ResponseData = { statusCode: 200, message: "Success", data: categoryBody }
+  let result: IResponseData = { statusCode: 200, message: "Success", data: categoryBody }
   const newCategory: any = new Category(categoryBody);
   const category = await Category.findOne({ categoryCode: categoryBody.categoryCode });
   if (category === null) {
@@ -38,12 +34,12 @@ const createCategory = async (categoryBody) => {
  * @param {string} [options.sortBy] - Sort option in the format: sortField:(desc|asc)
  * @param {number} [options.limit] - Maximum number of results per page (default = 10)
  * @param {number} [options.page] - Current page (default = 1)
- * @returns {Promise<ResponseData>}
+ * @returns {Promise<IResponseData>}
  */
-const queryCategories = async (filter, options): Promise<ResponseData> => {
-  let result: ResponseData = { statusCode: 200, message: "Success", data: null }
-  const users = await Category.paginate(filter, options);
-  result.data = users
+const queryCategories = async (filter, options): Promise<IResponseData> => {
+  let result: IResponseData = { statusCode: 200, message: "Success", data: null }
+  const categories = await Category.paginate(filter, options);
+  result.data = categories
   return result;
 };
 
@@ -51,10 +47,10 @@ const queryCategories = async (filter, options): Promise<ResponseData> => {
 /**
  * Get category by id
  * @param {ObjectId} id
- * @returns {Promise<ResponseData>}
+ * @returns {Promise<IResponseData>}
  */
-const getCategoryById = async (id): Promise<ResponseData> => {
-  let result: ResponseData = { statusCode: 200, message: "Success", data: null }
+const getCategoryById = async (id): Promise<IResponseData> => {
+  let result: IResponseData = { statusCode: 200, message: "Success", data: null }
   let category = await Category.findById(id);
   if (!category) {
     result.statusCode = 400
@@ -70,10 +66,10 @@ const getCategoryById = async (id): Promise<ResponseData> => {
  * Update category by id
  * @param {ObjectId} categoryId
  * @param {Object} updateBody
- * @returns {Promise<ResponseData>}
+ * @returns {Promise<IResponseData>}
  */
-const updateCategoryById = async (id, updateBody): Promise<ResponseData> => {
-  let result: ResponseData = { statusCode: 200, message: "Success", data: null }
+const updateCategoryById = async (id, updateBody): Promise<IResponseData> => {
+  let result: IResponseData = { statusCode: 200, message: "Success", data: null }
   let category = await Category.findOneAndUpdate({ _id: id }, updateBody, { returnOriginal: false })
   if (!category) {
     result.statusCode = 400
@@ -88,10 +84,10 @@ const updateCategoryById = async (id, updateBody): Promise<ResponseData> => {
 /**
  * Remove category by id
  * @param {ObjectId} categoryId
- * @returns {Promise<ResponseData>}
+ * @returns {Promise<IResponseData>}
  */
-const removeCategoryById = async (id): Promise<ResponseData> => {
-  let result: ResponseData = { statusCode: 200, message: "Success", data: null }
+const removeCategoryById = async (id): Promise<IResponseData> => {
+  let result: IResponseData = { statusCode: 200, message: "Success", data: null }
   const category = await Category.findOne({ _id: id });
   if (!category) {
     result.statusCode = 400
@@ -99,7 +95,7 @@ const removeCategoryById = async (id): Promise<ResponseData> => {
   } else {
     category.deleted = 'Y'
     await category.save()
-    result.message = "User deleted Successfully"
+    result.message = "Category deleted Successfully"
   }
   return result;
 };
@@ -108,16 +104,16 @@ const removeCategoryById = async (id): Promise<ResponseData> => {
 /**
  * Delete category by id
  * @param {ObjectId} categoryId
- * @returns {Promise<ResponseData>}
+ * @returns {Promise<IResponseData>}
  */
-const deleteCategoryById = async (id): Promise<ResponseData> => {
-  let result: ResponseData = { statusCode: 200, message: "Success", data: null }
+const deleteCategoryById = async (id): Promise<IResponseData> => {
+  let result: IResponseData = { statusCode: 200, message: "Success", data: null }
   const category = await Category.findOneAndDelete({ _id: id });
   if (!category) {
     result.statusCode = 400
     result.message = "Category not found"
   } else {
-    result.message = "User deleted Successfully"
+    result.message = "Category deleted Successfully"
   }
   return result;
 };

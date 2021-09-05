@@ -3,28 +3,6 @@ import validator from 'validator';
 import { CryptoHash } from "../middlewares/cryptoHash";
 
 
-/**
-* @swagger
-* definitions:
-*  UserModel:
-*    type: object
-*    properties:
-*      username:
-*        type: string
-*      displayName:
-*        type: string
-*      photoUrl:
-*        type: string
-*      password:
-*        type: string
-*        format: string
-*      email:
-*        type: string
-*        format: string
-*    xml:
-*      name: UserModel
-
-*/
 
 /**
  * Interface to model the User Schema for TypeScript.

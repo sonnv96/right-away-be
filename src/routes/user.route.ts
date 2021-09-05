@@ -6,8 +6,8 @@ import { userController } from '../controllers';
 const router = Router();
 router.get("/", authenticateToken, userController.getUsers)
 router.get("/:userId", userController.getUserById)
-router.put("/:postId", userController.updateUser);
-router.delete("/:postId", userController.deleteUser)
+router.put("/:userId", userController.updateUser);
+router.delete("/:userId", userController.deleteUser)
 
 export default router;
 
@@ -55,7 +55,6 @@ export default router;
 *        in: "path"
 *        description: "Userid of userto return"
 *        required: true
-*        type: "string"
 *      responses:
 *        '200':
 *          description: "successful operation"

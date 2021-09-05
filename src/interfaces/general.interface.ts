@@ -3,3 +3,4 @@ export interface IResponseData {
     message: string;
     data: any;
 }
+

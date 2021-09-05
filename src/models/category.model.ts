@@ -1,5 +1,5 @@
 import { Document, Model, model, Schema } from "mongoose";
-import { paginate, toJSON } from "../middlewares";
+import { paginate } from "../middlewares";
 
 /**
  * Interface to model the User Schema for TypeScript.
@@ -12,7 +12,7 @@ export interface ICategory extends Document {
     deleted: string;
 }
 
-export interface IPluginModel extends Model<ICategory> {
+export interface IPluginCategoryModel extends Model<ICategory> {
     paginate(filter: any, options: any): Promise<ICategory[]>
 }
 
@@ -44,4 +44,4 @@ const categorySchema: Schema = new Schema({
 // categorySchema.plugin(toJSON);
 categorySchema.plugin(paginate);
 
-export const Category =  model<ICategory>('CategoryModel', categorySchema) as IPluginModel;
+export const Category =  model<ICategory>('CategoryModel', categorySchema) as IPluginCategoryModel;

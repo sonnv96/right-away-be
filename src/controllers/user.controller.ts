@@ -1,50 +1,34 @@
 import { Request, Response } from "express";
-import { UserModel } from "../models";
-import { catchAsync } from "../utils";
+import { userService } from "../services/user.service";
+import { catchAsync, pick } from "../utils";
 
 
 const getUsers = catchAsync(async (req: Request, res: Response): Promise<void> => {
-    const list = await UserModel.find();
-    res.json({ list });
+     const filter = pick(req.query, ['name', 'role']);
+     const options = pick(req.query, ['sortBy', 'page', 'limit']);
+     filter.deleted = 'N'
+     const result = await userService.queryUsers(filter, options);
+     res.status(result.statusCode).json({ message: result.message, data: result.data });
 })
 
 const getUserById = catchAsync(async (req: Request, res: Response): Promise<void> => {
-    const user = await UserModel.findOne({ userId: req.params.userId });
-    if (user === null) {
-        res.sendStatus(404);
-    } else {
-        res.json(user);
-    }
+    const result = await userService.getUserById(req.params.userId);
+    res.status(result.statusCode).json({ message: result.message, data: result.data });
 })
 
 const updateUser = catchAsync(async (req: Request, res: Response): Promise<void> => {
-    const user = await UserModel.findOneAndUpdate({ userId: req.params.userId }, req.body);
-    if (user === null) {
-        res.sendStatus(404);
-    } else {
-        const updateUser = { _id: req.params.userId, ...req.body };
-        res.json({ status: res.status, data: updateUser });
-    }
+    const result = await userService.updateUserById(req.params.userId, req.body);
+    res.status(result.statusCode).json({ message: result.message, data: result.data });
 })
 
 const removeUser = catchAsync(async (req: Request, res: Response): Promise<void> => {
-    const user = await UserModel.findOne({ userId: req.params.userId });
-    if (user === null) {
-        res.sendStatus(404);
-    } else {
-        user.deleted = 'Y'
-        await user.save()
-        res.json({ response: "User deleted Successfully" });
-    }
+    const result = await userService.removeUserById(req.params.userId)
+    res.status(result.statusCode).json({ message: result.message, data: result.data });
 })
 
 const deleteUser = catchAsync(async (req: Request, res: Response): Promise<void> => {
-    const user = await UserModel.findOneAndDelete({ userId: req.params.userId });
-    if (user === null) {
-        res.sendStatus(404);
-    } else {
-        res.json({ response: "User deleted Successfully" });
-    }
+    const result = await userService.deleteUserById(req.params.userId)
+    res.status(result.statusCode).json({ message: result.message, data: result.data });
 })
 
 export const userController = {getUsers, getUserById, updateUser, removeUser, deleteUser}

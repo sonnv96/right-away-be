@@ -1,5 +1,6 @@
 import { Document, Model, model, Schema } from "mongoose";
 import validator from 'validator';
+import { paginate } from "../middlewares";
 import { CryptoHash } from "../middlewares/cryptoHash";
 
 
@@ -24,6 +25,10 @@ export interface IUser extends Document {
     deleted: string;
     comparePassword(candidatePassword: string, currentPassword: string): boolean;
 
+}
+
+export interface IPluginUserModel extends Model<IUser> {
+    paginate(filter: any, options: any): Promise<IUser[]>
 }
 
 const userSchema: Schema = new Schema({
@@ -77,6 +82,8 @@ const userSchema: Schema = new Schema({
     collection: 'users'
 });
 
+userSchema.plugin(paginate);
+
 userSchema.pre<IUser>("save", async function save(next) {
     const user = this;
     if (user.isModified('password')) {
@@ -92,4 +99,4 @@ userSchema.methods.comparePassword = async (candidatePassword: string, currentPa
     return await cryptoHash.verify(candidatePassword, currentPassword)
 };
 // UserModel is name export, if set name collection, will get this name for collection
-export const UserModel = model<IUser>('UserModel', userSchema);
+export const User = model<IUser>('UserModel', userSchema) as IPluginUserModel;

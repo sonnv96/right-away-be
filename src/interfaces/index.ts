@@ -1,1 +1,1 @@
-export * from "./responseData.interface"
+export * from "./general.interface"

@@ -131,7 +131,7 @@ export default router
 *      - "application/json"
 *      - "application/xml"
 *      parameters:
-*      - name: "id"
+*      - name: "categoryId"
 *        in: "path"
 *        description: "_id of object need update"
 *        required: true
@@ -185,7 +185,7 @@ export default router
 *      - "application/json"
 *      - "application/xml"
 *      parameters:
-*      - name: "id"
+*      - name: "categoryId"
 *        in: "path"
 *        description: "_id of object need delete"
 *        required: true

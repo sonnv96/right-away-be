@@ -1,19 +1,18 @@
 import { Category } from "../models";
 
 
-interface ResultNewData {
+interface ResponseData {
   statusCode: number;
   message: string;
-  dataResponse: any;
+  data: any;
 }
 /**
  * Create a category
  * @param {Object} categoryBody
- * @returns {Promise<User>}
+ * @returns {Promise<ResponseData>}
  */
-
 const createCategory = async (categoryBody) => {
-  let result: ResultNewData = { statusCode: 200, message: "Success", dataResponse: categoryBody }
+  let result: ResponseData = { statusCode: 200, message: "Success", data: categoryBody }
   const newCategory: any = new Category(categoryBody);
   const category = await Category.findOne({ categoryCode: categoryBody.categoryCode });
   if (category === null) {
@@ -22,7 +21,7 @@ const createCategory = async (categoryBody) => {
       result.statusCode = 500
     } else {
       result.statusCode = 200
-      result.dataResponse = categorySave
+      result.data = categorySave
     }
   } else {
     result.statusCode = 200
@@ -31,6 +30,7 @@ const createCategory = async (categoryBody) => {
   return result;
 };
 
+
 /**
  * Query for category
  * @param {Object} filter - Mongo filter
@@ -38,21 +38,31 @@ const createCategory = async (categoryBody) => {
  * @param {string} [options.sortBy] - Sort option in the format: sortField:(desc|asc)
  * @param {number} [options.limit] - Maximum number of results per page (default = 10)
  * @param {number} [options.page] - Current page (default = 1)
- * @returns {Promise<QueryResult>}
+ * @returns {Promise<ResponseData>}
  */
-const queryCategories = async (filter, options) => {
+const queryCategories = async (filter, options): Promise<ResponseData> => {
+  let result: ResponseData = { statusCode: 200, message: "Success", data: null }
   const users = await Category.paginate(filter, options);
-  return users;
+  result.data = users
+  return result;
 };
+
 
 /**
  * Get category by id
  * @param {ObjectId} id
- * @returns {Promise<Category>}
+ * @returns {Promise<ResponseData>}
  */
-const getCategoryById = async (id) => {
-
-  return Category.findById(id);
+const getCategoryById = async (id): Promise<ResponseData> => {
+  let result: ResponseData = { statusCode: 200, message: "Success", data: null }
+  let category = await Category.findById(id);
+  if (!category) {
+    result.statusCode = 400
+    result.message = "Category not found"
+  } else {
+    result.data = category
+  }
+  return result;
 };
 
 
@@ -60,24 +70,56 @@ const getCategoryById = async (id) => {
  * Update category by id
  * @param {ObjectId} categoryId
  * @param {Object} updateBody
- * @returns {Promise<User>}
+ * @returns {Promise<ResponseData>}
  */
-const updateCategoryById = async (id, updateBody) => {
-  return Category.findOneAndUpdate({ _id: id }, updateBody);
+const updateCategoryById = async (id, updateBody): Promise<ResponseData> => {
+  let result: ResponseData = { statusCode: 200, message: "Success", data: null }
+  let category = await Category.findOneAndUpdate({ _id: id }, updateBody, { returnOriginal: false })
+  if (!category) {
+    result.statusCode = 400
+    result.message = "Category not found"
+  } else {
+    result.data = category
+  }
+  return result;
 };
 
-// /**
-//  * Delete user by id
-//  * @param {ObjectId} userId
-//  * @returns {Promise<User>}
-//  */
-// const deleteUserById = async (userId) => {
-//   const user = await getUserById(userId);
-//   if (!user) {
-//     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
-//   }
-//   await user.remove();
-//   return user;
-// };
 
-export const categoryService = { queryCategories, getCategoryById, updateCategoryById, createCategory }
+/**
+ * Remove category by id
+ * @param {ObjectId} categoryId
+ * @returns {Promise<ResponseData>}
+ */
+const removeCategoryById = async (id): Promise<ResponseData> => {
+  let result: ResponseData = { statusCode: 200, message: "Success", data: null }
+  const category = await Category.findOne({ _id: id });
+  if (!category) {
+    result.statusCode = 400
+    result.message = "Category not found"
+  } else {
+    category.deleted = 'Y'
+    await category.save()
+    result.message = "User deleted Successfully"
+  }
+  return result;
+};
+
+
+/**
+ * Delete category by id
+ * @param {ObjectId} categoryId
+ * @returns {Promise<ResponseData>}
+ */
+const deleteCategoryById = async (id): Promise<ResponseData> => {
+  let result: ResponseData = { statusCode: 200, message: "Success", data: null }
+  const category = await Category.findOneAndDelete({ _id: id });
+  if (!category) {
+    result.statusCode = 400
+    result.message = "Category not found"
+  } else {
+    result.message = "User deleted Successfully"
+  }
+  return result;
+};
+
+export const categoryService = { queryCategories, getCategoryById, updateCategoryById, createCategory, removeCategoryById, deleteCategoryById }

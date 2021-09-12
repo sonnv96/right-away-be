@@ -1,9 +1,11 @@
 import { Router } from 'express';
 import { categoryController } from '../controllers';
+import { validate } from '../middlewares';
+import { categoryValidation } from '../validations';
 
 
 const router = Router();
-router.get("/", categoryController.getCategories);
+router.get("/", validate(categoryValidation.getCategories), categoryController.getCategories);
 router.get("/:categoryId", categoryController.getCategoryById);
 router.put("/:categoryId", categoryController.updateCategory);
 router.put("/remove/:categoryId", categoryController.removeCategory);

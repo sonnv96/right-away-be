@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { CustomValidation } from "./custom.validation";
+import { customValidation } from "./custom.validation";
 
 
 const getUsers = {
@@ -11,13 +11,13 @@ const getUsers = {
 
 const getUserById = {
   params: Joi.object().keys({
-    userId: Joi.string().custom(CustomValidation.objectId),
+    userId: Joi.string().custom(customValidation.objectId),
   }),
 };
 
 const updateUser = {
   params: Joi.object().keys({
-    userId: Joi.required().custom(CustomValidation.objectId),
+    userId: Joi.required().custom(customValidation.objectId),
   }),
   body: Joi.object()
     .keys({
@@ -31,7 +31,7 @@ const updateUser = {
 
 const deleteUser = {
   params: Joi.object().keys({
-    userId: Joi.string().custom(CustomValidation.objectId),
+    userId: Joi.string().custom(customValidation.objectId),
   }),
 };
 

@@ -15,7 +15,7 @@ const password = (value, helpers) => {
     return value;
 };
 
-export const CustomValidation = {
+export const customValidation = {
     objectId,
     password,
 };

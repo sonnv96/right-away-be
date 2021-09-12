@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { CustomValidation } from "./custom.validation";
+import { customValidation } from "./custom.validation";
 
 
 const createCategory = {
@@ -18,13 +18,13 @@ const getCategories = {
 
 const getCategoryById = {
   params: Joi.object().keys({
-    categoryId: Joi.string().custom(CustomValidation.objectId),
+    categoryId: Joi.string().custom(customValidation.objectId),
   }),
 };
 
 const updateCategory = {
   params: Joi.object().keys({
-    categoryId: Joi.required().custom(CustomValidation.objectId),
+    categoryId: Joi.required().custom(customValidation.objectId),
   }),
   body: Joi.object()
     .keys({
@@ -36,7 +36,7 @@ const updateCategory = {
 
 const deleteCategory = {
   params: Joi.object().keys({
-    categoryId: Joi.string().custom(CustomValidation.objectId),
+    categoryId: Joi.string().custom(customValidation.objectId),
   }),
 };
 

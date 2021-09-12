@@ -1,13 +1,14 @@
 import { Router } from 'express';
-import { authenticateToken } from '../middlewares/authenticateToken';
 import { userController } from '../controllers';
+import { validate } from '../middlewares';
+import { userValidation } from '../validations/user.validation';
 
 
 const router = Router();
-router.get("/", authenticateToken, userController.getUsers)
-router.get("/:userId", userController.getUserById)
-router.put("/:userId", userController.updateUser);
-router.delete("/:userId", userController.deleteUser)
+router.get("/", validate(userValidation.getUsers, true), userController.getUsers)
+router.get("/:userId", validate(userValidation.getUserById), userController.getUserById)
+router.put("/:userId", validate(userValidation.updateUser), userController.updateUser);
+router.delete("/:userId", validate(userValidation.deleteUser), userController.deleteUser)
 
 export default router;
 

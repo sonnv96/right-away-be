@@ -6,11 +6,11 @@ import { categoryValidation } from '../validations';
 
 const router = Router();
 router.get("/", validate(categoryValidation.getCategories), categoryController.getCategories);
-router.get("/:categoryId", categoryController.getCategoryById);
-router.put("/:categoryId", categoryController.updateCategory);
-router.put("/remove/:categoryId", categoryController.removeCategory);
-router.post("/", categoryController.createCategory);
-router.delete("/:categoryId", categoryController.deleteCategory);
+router.get("/:categoryId", validate(categoryValidation.getCategoryById), categoryController.getCategoryById);
+router.put("/:categoryId", validate(categoryValidation.updateCategory), categoryController.updateCategory);
+router.put("/remove/:categoryId", validate(categoryValidation.deleteCategory), categoryController.removeCategory);
+router.post("/", validate(categoryValidation.createCategory), categoryController.createCategory);
+router.delete("/:categoryId", validate(categoryValidation.deleteCategory), categoryController.deleteCategory);
 
 export default router
 

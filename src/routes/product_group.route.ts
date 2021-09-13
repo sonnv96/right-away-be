@@ -1,16 +1,16 @@
 import { Router } from 'express';
-import { merchantController } from '../controllers';
+import { productGroupController } from '../controllers';
 import { validate } from '../middlewares';
-import { merchantValidation } from '../validations';
+import { productGroupValidation } from '../validations';
 
 
 const router = Router();
-router.get("/", validate(merchantValidation.getMerchants), merchantController.getMerchants);
-router.get("/:merchantId", validate(merchantValidation.getMerchantById), merchantController.getMerchantById);
-router.put("/:merchantId", validate(merchantValidation.updateMerchant), merchantController.updateMerchant);
-router.put("/remove/:merchantId", validate(merchantValidation.deleteMerchant), merchantController.removeMerchant);
-router.post("/", validate(merchantValidation.createMerchant), merchantController.createMerchant);
-router.delete("/:merchantId", validate(merchantValidation.deleteMerchant), merchantController.deleteMerchant);
+router.get("/", validate(productGroupValidation.getProductGroups), productGroupController.getProductGroups);
+router.get("/:productGroupId", validate(productGroupValidation.getProductGroupById), productGroupController.getProductGroupById);
+router.put("/:productGroupId", validate(productGroupValidation.updateProductGroup), productGroupController.updateProductGroup);
+router.put("/remove/:productGroupId", validate(productGroupValidation.deleteProductGroup), productGroupController.removeProductGroup);
+router.post("/", validate(productGroupValidation.createProductGroup), productGroupController.createProductGroup);
+router.delete("/:productGroupId", validate(productGroupValidation.deleteProductGroup), productGroupController.deleteProductGroup);
 
 export default router
 
@@ -19,15 +19,15 @@ export default router
 /**
  * @swagger
  * tags:
- *   name: Merchant
- *   description: Merchant
+ *   name: ProductGroup
+ *   description: ProductGroup
  */
 
 /**
 * @swagger
-* '/api/merchant':
+* '/api/productGroup':
 *    get:
-*      tags: [Merchant]
+*      tags: [ProductGroup]
 *      summary: Get list all categories
 *      produces:
 *      - "application/json"
@@ -51,15 +51,15 @@ export default router
 *          schema:
 *            type: "array"
 *            items:
-*              $ref: "#/definitions/schemas/Merchant"
+*              $ref: "#/definitions/schemas/ProductGroup"
 */
 
 /**
 * @swagger
-* '/api/merchant/{merchantId}':
+* '/api/productGroup/{productGroupId}':
 *    get:
-*      tags: [Merchant]
-*      summary: Get merchant by id
+*      tags: [ProductGroup]
+*      summary: Get productGroup by id
 *      consumes:
 *      - "application/json"
 *      - "application/xml"
@@ -67,28 +67,28 @@ export default router
 *      - "application/json"
 *      - "application/xml"
 *      parameters:
-*      - name: "merchantId"
+*      - name: "productGroupId"
 *        in: "path"
-*        description: "_id of merchant to return"
+*        description: "_id of productGroup to return"
 *        required: true
 *        type: "string"
 *      responses:
 *        '200':
 *          description: "successful operation"
 *          schema:
-*            $ref: "#/definitions/schemas/Merchant"
+*            $ref: "#/definitions/schemas/ProductGroup"
 *        '400':
 *          description: Bad request!
 *        '404':
-*          description: Merchant not found
+*          description: ProductGroup not found
 */
 
 /**
 * @swagger
-* '/api/merchant/{merchantId}':
+* '/api/productGroup/{productGroupId}':
 *    put:
-*      tags: [Merchant]
-*      summary: Update an existing merchant
+*      tags: [ProductGroup]
+*      summary: Update an existing productGroup
 *      consumes:
 *      - "application/json"
 *      - "application/xml"
@@ -96,36 +96,36 @@ export default router
 *      - "application/xml"
 *      - "application/json"
 *      parameters:
-*      - name: "merchantId"
+*      - name: "productGroupId"
 *        in: "path"
 *        description: "_id of object need update"
 *        required: true
 *        type: "string"
 *      - in: "body"
 *        name: "body"
-*        description: "Merchant object that needs to be update to the store"
+*        description: "ProductGroup object that needs to be update to the store"
 *        required: true
 *        schema:
-*          $ref: "#/definitions/schemas/Merchant"
+*          $ref: "#/definitions/schemas/ProductGroup"
 *      responses:
 *        '200':
 *          description: "successful operation"
 *          schema:
-*            $ref: "#/definitions/schemas/Merchant"
+*            $ref: "#/definitions/schemas/ProductGroup"
 *        '400':
 *          description: Bad request!
 *        '404':
-*          description: Merchant not found
+*          description: ProductGroup not found
 *        '405':
 *          description: Validation exception
 */
 
 /**
 * @swagger
-* '/api/merchant/remove/{merchantId}':
+* '/api/productGroup/remove/{productGroupId}':
 *    put:
-*      tags: [Merchant]
-*      summary: Update an existing merchant to status deleted
+*      tags: [ProductGroup]
+*      summary: Update an existing productGroup to status deleted
 *      consumes:
 *      - "application/json"
 *      - "application/xml"
@@ -133,7 +133,7 @@ export default router
 *      - "application/json"
 *      - "application/xml"
 *      parameters:
-*      - name: "merchantId"
+*      - name: "productGroupId"
 *        in: "path"
 *        description: "_id of object need update"
 *        required: true
@@ -142,21 +142,21 @@ export default router
 *        '200':
 *          description: "successful operation"
 *          schema:
-*            $ref: "#/definitions/schemas/Merchant"
+*            $ref: "#/definitions/schemas/ProductGroup"
 *        '400':
 *          description: Bad request!
 *        '404':
-*          description: Merchant not found
+*          description: ProductGroup not found
 *        '405':
 *          description: Validation exception
 */
 
 /**
 * @swagger
-* '/api/merchant':
+* '/api/productGroup':
 *    post:
-*      tags: [Merchant]
-*      summary: Create new merchant
+*      tags: [ProductGroup]
+*      summary: Create new productGroup
 *      consumes:
 *      - "application/json"
 *      - "application/xml"
@@ -165,29 +165,29 @@ export default router
 *      - "application/xml"
 *      parameters:
 *      - in: body
-*        name: merchant
-*        description: "Created merchant object"
+*        name: productGroup
+*        description: "Created productGroup object"
 *        schema:
-*          $ref: '#/definitions/schemas/Merchant'
+*          $ref: '#/definitions/schemas/ProductGroup'
 *      responses:
 *        '200':
 *          description: "successful operation"
 *          schema:
-*            $ref: "#/definitions/schemas/Merchant"
+*            $ref: "#/definitions/schemas/ProductGroup"
 */
 
 
 /**
 * @swagger
-* '/api/merchant/{merchantId}':
+* '/api/productGroup/{productGroupId}':
 *    delete:
-*      tags: [Merchant]
-*      summary: Delete a merchant
+*      tags: [ProductGroup]
+*      summary: Delete a productGroup
 *      produces:
 *      - "application/json"
 *      - "application/xml"
 *      parameters:
-*      - name: "merchantId"
+*      - name: "productGroupId"
 *        in: "path"
 *        description: "_id of object need delete"
 *        required: true
@@ -196,7 +196,7 @@ export default router
 *        '400':
 *          description: Bad request!
 *        '404':
-*          description: Merchant not found
+*          description: ProductGroup not found
 */
 
 

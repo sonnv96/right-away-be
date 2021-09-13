@@ -12,7 +12,7 @@ const createMerchant = {
   }),
 };
 
-const getCategories = {
+const getMerchants = {
   query: Joi.object().keys({
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
@@ -48,7 +48,7 @@ const deleteMerchant = {
 
 export const merchantValidation = {
   createMerchant,
-  getCategories,
+  getMerchants,
   getMerchantById,
   updateMerchant,
   deleteMerchant

@@ -36,7 +36,7 @@ const createMerchant = async (merchantBody) => {
  * @param {number} [options.page] - Current page (default = 1)
  * @returns {Promise<IResponseData>}
  */
-const queryCategories = async (filter, options): Promise<IResponseData> => {
+const queryMerchants = async (filter, options): Promise<IResponseData> => {
   let result: IResponseData = { statusCode: 200, message: "Success", data: null }
   const categories = await Merchant.paginate(filter, options);
   result.data = categories
@@ -118,4 +118,4 @@ const deleteMerchantById = async (id): Promise<IResponseData> => {
   return result;
 };
 
-export const merchantService = { queryCategories, getMerchantById, updateMerchantById, createMerchant, removeMerchantById, deleteMerchantById }
+export const merchantService = { queryMerchants, getMerchantById, updateMerchantById, createMerchant, removeMerchantById, deleteMerchantById }

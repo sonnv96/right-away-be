@@ -3,14 +3,14 @@ import { merchantService } from "../services";
 import { catchAsync, pick } from "../utils";
 
 
-const getCategories = catchAsync(async (req: Request, res: Response): Promise<void> => {
+const getMerchants = catchAsync(async (req: Request, res: Response): Promise<void> => {
     // pick function will get field name from query and field name Specified in array
     const filter = pick(req.query, ['name', 'role']);
     const options = pick(req.query, ['sortBy', 'page', 'limit']);
 
     // filter just query param have deleted == No
     filter.deleted = 'N'
-    const result = await merchantService.queryCategories(filter, options);
+    const result = await merchantService.queryMerchants(filter, options);
     res.status(result.statusCode).json({ message: result.message, data: result.data });
 })
 
@@ -41,6 +41,6 @@ const deleteMerchant = catchAsync(async (req: Request, res: Response): Promise<v
 
 
 export const merchantController = {
-    getCategories, getMerchantById, updateMerchant, createMerchant, removeMerchant, deleteMerchant
+    getMerchants, getMerchantById, updateMerchant, createMerchant, removeMerchant, deleteMerchant
 }
 

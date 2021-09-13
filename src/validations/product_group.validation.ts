@@ -4,7 +4,7 @@ import { customValidation } from "./custom.validation";
 
 const createProductGroup = {
   body: Joi.object().keys({
-    merchantId: Joi.string().required(),
+    merchantId: Joi.required().custom(customValidation.objectId),
     productGroupCode: Joi.string().required(),
     name: Joi.string().required(),
   }),
@@ -29,7 +29,7 @@ const updateProductGroup = {
   }),
   body: Joi.object()
     .keys({
-      merchantId: Joi.string(),
+      merchantId: Joi.string().custom(customValidation.objectId),
       productGroupCode: Joi.string(),
       name: Joi.string(),
     })

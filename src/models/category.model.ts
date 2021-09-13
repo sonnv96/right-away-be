@@ -2,7 +2,7 @@ import { Document, Model, model, Schema } from "mongoose";
 import { paginate } from "../middlewares";
 
 /**
- * Interface to model the User Schema for TypeScript.
+ * Interface to model the Category Schema for TypeScript.
  * @param categoryCode:string
  * @param categoryName:string
  */
@@ -44,4 +44,4 @@ const categorySchema: Schema = new Schema({
 // categorySchema.plugin(toJSON);
 categorySchema.plugin(paginate);
 
-export const Category =  model<ICategory>('CategoryModel', categorySchema) as IPluginCategoryModel;
+export const Category = model<ICategory>('CategoryModel', categorySchema) as IPluginCategoryModel;

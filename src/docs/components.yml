@@ -99,6 +99,26 @@ definitions:
         merchantId: "612f9612fa318bc6eb7b11dc"
         productGroupCode: "abc11"
         name: "abc"
+    Product:
+      type: object
+      required:
+        - productCode
+        - productName
+        - productGroupId
+      properties:
+        productCode:
+          type: string
+        productName:
+          type: string
+        productGroupId:
+          type: string
+        deleted:
+          type: string
+
+      example:
+        productCode: "123ccc"
+        productName: "Há cảo"
+        productGroupId: "612f9612fa318bc6eb7b11dc"
     ChangePasswordModel:
       type: object
       required:

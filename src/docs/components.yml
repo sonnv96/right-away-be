@@ -1,157 +1,184 @@
 definitions:
-    schemas: 
-        LoginModel:
-            type: object
-            required:
-            - username
-            - password
-            properties:
-                username:
-                    type: string
-                password:
-                    type: string
-            example:
-                username: "sonnguyen"
-                password: "123456"
-        User:
-            type: object
-            required:
-            - username
-            - password
-            properties:
-                username:
-                    type: string
-                displayName:
-                    type: string
-                photoUrl:
-                    type: string
-                password:
-                    type: string
-                email:
-                    type: string
-            example:
-                username: "sonnguyen"
-                displayName: "Son Nguyen"
-                photoUrl: "abc.png"
-                password: "123456"
-                email: "sonnguyen@gmail.com"
-        Category:
-            type: object
-            required:
-            - categoryCode
-            - categoryName
-            properties:
-                categoryCode:
-                    type: string
-                categoryName:
-                    type: string
-                deleted:
-                    type: string
+  schemas:
+    LoginModel:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      example:
+        username: "sonnguyen"
+        password: "123456"
+    User:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+        displayName:
+          type: string
+        photoUrl:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+      example:
+        username: "sonnguyen"
+        displayName: "Son Nguyen"
+        photoUrl: "abc.png"
+        password: "123456"
+        email: "sonnguyen@gmail.com"
+    Category:
+      type: object
+      required:
+        - categoryCode
+        - categoryName
+      properties:
+        categoryCode:
+          type: string
+        categoryName:
+          type: string
+        deleted:
+          type: string
 
-            example:
-                categoryCode: "abc"
-                categoryName: "Thuc uong"
-                deleted: "N"
-        ChangePasswordModel:
-            type: object
-            required:
-            - oldPassword
-            - newPassword
-            - username
-            properties:
-                oldPassword:
-                    type: string
-                newPassword:
-                    type: string
-                username:
-                    type: string
+      example:
+        categoryCode: "abc"
+        categoryName: "Thuc uong"
+    Merchant:
+      type: object
+      required:
+        - merchantCode
+        - name
+        - merchantDetailId
+        - productGroupId
+        - categoryId
+      properties:
+        merchantCode:
+          type: string
+        name:
+          type: string
+        merchantDetailId:
+          type: string
+        productGroupId:
+          type: string
+        categoryId:
+          type: string
+        deleted:
+          type: string
 
-            example:
-                oldPassword: "123456"
-                newPassword: "123123"
-                username: "sonnguyen"
-        AccessToken:
-            type: object
-            properties:
-                access_token:
-                    type: string
-            example:
-                access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWJhYzUzNDk1NGI1NDEzOTgwNmMxMTIiLCJpYXQiOjE1ODkyOTg0ODQsImV4cCI6MTU4OTMwMDI4NH0.m1U63blB0MLej_WfB7yC2FTMnCziif9X8yzwDEfJXAg
-        RefeshToken:
-            type: object
-            properties:
-                refreshToken:
-                    type: string
-            example:
-                refreshToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWJhYzUzNDk1NGI1NDEzOTgwNmMxMTIiLCJpYXQiOjE1ODkyOTg0ODQsImV4cCI6MTU4OTMwMDI4NH0.m1U63blB0MLej_WfB7yC2FTMnCziif9X8yzwDEfJXAg
-        Token:
-            type: object
-            properties:
-                token:
-                    type: string
-                expires:
-                    type: string
-                    format: date-time
-            example:
-                token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWJhYzUzNDk1NGI1NDEzOTgwNmMxMTIiLCJpYXQiOjE1ODkyOTg0ODQsImV4cCI6MTU4OTMwMDI4NH0.m1U63blB0MLej_WfB7yC2FTMnCziif9X8yzwDEfJXAg
-                expires: 2020-05-12T16:18:04.793Z
+      example:
+        merchantCode: "abc"
+        name: "Phúc long"
+        merchantDetailId: "612f9612fa318bc6eb7b11dc"
+        productGroupId: "612f9612fa318bc6eb7b11dc"
+        categoryId: "612f9612fa318bc6eb7b11dc"
+    ChangePasswordModel:
+      type: object
+      required:
+        - oldPassword
+        - newPassword
+        - username
+      properties:
+        oldPassword:
+          type: string
+        newPassword:
+          type: string
+        username:
+          type: string
 
-        AuthTokens:
-            type: object
-            properties:
-                access:
-                    $ref: '#/components/schemas/Token'
-                refresh:
-                    $ref: '#/components/schemas/Token'
+      example:
+        oldPassword: "123456"
+        newPassword: "123123"
+        username: "sonnguyen"
+    AccessToken:
+      type: object
+      properties:
+        access_token:
+          type: string
+      example:
+        access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWJhYzUzNDk1NGI1NDEzOTgwNmMxMTIiLCJpYXQiOjE1ODkyOTg0ODQsImV4cCI6MTU4OTMwMDI4NH0.m1U63blB0MLej_WfB7yC2FTMnCziif9X8yzwDEfJXAg
+    RefeshToken:
+      type: object
+      properties:
+        refreshToken:
+          type: string
+      example:
+        refreshToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWJhYzUzNDk1NGI1NDEzOTgwNmMxMTIiLCJpYXQiOjE1ODkyOTg0ODQsImV4cCI6MTU4OTMwMDI4NH0.m1U63blB0MLej_WfB7yC2FTMnCziif9X8yzwDEfJXAg
+    Token:
+      type: object
+      properties:
+        token:
+          type: string
+        expires:
+          type: string
+          format: date-time
+      example:
+        token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWJhYzUzNDk1NGI1NDEzOTgwNmMxMTIiLCJpYXQiOjE1ODkyOTg0ODQsImV4cCI6MTU4OTMwMDI4NH0.m1U63blB0MLej_WfB7yC2FTMnCziif9X8yzwDEfJXAg
+        expires: 2020-05-12T16:18:04.793Z
 
-        Error:
-            type: object
-            properties:
-                code:
-                    type: number
-                message:
-                    type: string
+    AuthTokens:
+      type: object
+      properties:
+        access:
+          $ref: "#/components/schemas/Token"
+        refresh:
+          $ref: "#/components/schemas/Token"
 
-    responses:
-        DuplicateEmail:
-            description: Email already taken
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/Error'
-                    example:
-                        code: 400
-                        message: Email already taken
-        Unauthorized:
-            description: Unauthorized
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/Error'
-                    example:
-                        code: 401
-                        message: Please authenticate
-        Forbidden:
-            description: Forbidden
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/Error'
-                    example:
-                        code: 403
-                        message: Forbidden
-        NotFound:
-            description: Not found
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/Error'
-                    example:
-                        code: 404
-                        message: Not found
+    Error:
+      type: object
+      properties:
+        code:
+          type: number
+        message:
+          type: string
 
-    securitySchemes:
-        bearerAuth:
-            type: http
-            scheme: bearer
-            bearerFormat: JWT
+  responses:
+    DuplicateEmail:
+      description: Email already taken
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            code: 400
+            message: Email already taken
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            code: 401
+            message: Please authenticate
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            code: 403
+            message: Forbidden
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            code: 404
+            message: Not found
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

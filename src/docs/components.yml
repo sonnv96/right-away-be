@@ -56,15 +56,12 @@ definitions:
       required:
         - merchantCode
         - name
-        - merchantDetailId
         - productGroupId
         - categoryId
       properties:
         merchantCode:
           type: string
         name:
-          type: string
-        merchantDetailId:
           type: string
         productGroupId:
           type: string
@@ -76,7 +73,6 @@ definitions:
       example:
         merchantCode: "abc"
         name: "Phúc long"
-        merchantDetailId: "612f9612fa318bc6eb7b11dc"
         productGroupId: "612f9612fa318bc6eb7b11dc"
         categoryId: "612f9612fa318bc6eb7b11dc"
     ProductGroup:
@@ -159,6 +155,46 @@ definitions:
         likeQuantity: 2
         quantity: 2
         productId: "612f9612fa318bc6eb7b11dc"
+    MerchantDetail:
+      type: object
+      required:
+        - merchantDetailCode
+        - voteQuantity
+        - merchantId
+      properties:
+        merchantDetailCode:
+          type: string
+        address:
+          type: object
+        time:
+          type: object
+        prices:
+          type: object
+        voteQuantity:
+          type: number
+        merchantId:
+          type: string
+        deleted:
+          type: string
+
+      example:
+        merchantDetailCode: "123"
+        address: {
+          street: "37 Ton Duc Thang",
+          ward: "7",
+          district: "1",
+          city: "Ho Chi Minh"
+        }
+        time: {
+          timeOpen: "8:30",
+          timeClosed: "17:00"
+        }
+        prices: {
+          priceFrom: "30000d",
+          maxPrice: "70000"
+        }
+        voteQuantity: 3
+        merchantId: "612f9612fa318bc6eb7b11dc"
     ChangePasswordModel:
       type: object
       required:

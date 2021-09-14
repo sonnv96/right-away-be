@@ -5,14 +5,12 @@ import { paginate } from "../middlewares";
  * Interface to model the Merchant Schema for TypeScript.
  * @param merchantCode:string
  * @param name:string
- * @param merchantDetailId:string
  * @param productGroupId:string
  * @param categoryId:string
  */
 export interface IMerchant extends Document {
     merchantCode: string;
     name: string;
-    merchantDetailId: string;
     productGroupId: string;
     categoryId: string;
     deleted: string;
@@ -30,11 +28,6 @@ const merchantSchema: Schema = new Schema({
         unique: true
     },
     name: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    merchantDetailId: {
         type: String,
         required: true,
         trim: true,

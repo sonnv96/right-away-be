@@ -6,7 +6,6 @@ const createMerchant = {
   body: Joi.object().keys({
     merchantCode: Joi.string().required(),
     name: Joi.string().required(),
-    merchantDetailId: Joi.required().custom(customValidation.objectId),
     productGroupId: Joi.required().custom(customValidation.objectId),
     categoryId: Joi.required().custom(customValidation.objectId),
   }),
@@ -33,7 +32,6 @@ const updateMerchant = {
     .keys({
       merchantCode: Joi.string(),
       name: Joi.string(),
-      merchantDetailId: Joi.string().custom(customValidation.objectId),
       productGroupId: Joi.string().custom(customValidation.objectId),
       categoryId: Joi.string().custom(customValidation.objectId),
     })
